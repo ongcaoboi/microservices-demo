@@ -1,0 +1,29 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microservices Demo</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script>
+    function logout() {
+      console.log(localStorage.getItem('access_token'));
+    }
+  </script>
+</head>
+
+<body>
+  <nav>
+    <h1><a href="/">Ninja Smoothies</a></h1>
+    <ul>
+      <% if(data) { %>
+        <li>
+          <%- data.name %>
+        </li>
+        <li><a id="logout" onclick="logout()" href="/logout">Log out</a></li>
+        <% }else{ %>
+          <li><a href="/login">Log in</a></li>
+          <li><a href="/signup" class="btn">Sign up</a></li>
+          <% } %>
+    </ul>
+  </nav>

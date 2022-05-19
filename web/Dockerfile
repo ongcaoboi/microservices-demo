@@ -1,11 +1,11 @@
 FROM node:latest
 
-COPY . /src
+WORKDIR /usr/app
 
-WORKDIR /src
+COPY package.json .
 
-RUN npm install --production
+RUN npm install --quiet
+
+COPY . .
 
 EXPOSE 3000
-
-CMD npm start

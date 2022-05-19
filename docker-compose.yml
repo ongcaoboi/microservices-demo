@@ -8,19 +8,42 @@ services:
   web:
     build: './web'
     restart: always
-    # ports:
-    #   - "3000:3000"
+    command: npm start
     networks:
       - microservices-net
+    volumes:
+      - ./web:/usr/app
 
   user:
     build: './user'
     restart: always
-    # ports:
-    #   - "3001:3000"
+    command: npm start
     networks:
       - microservices-net
+    volumes:
+      - ./user:/usr/app
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_DB_URI=mongodb://mongodb/microservices
 
+  auth: 
+    build: './auth'
+    restart: always
+    command: npm start
+    networks:
+      - microservices-net
+    volumes:
+      - ./auth:/usr/app
+    environment:
+      - KEY_ACCESS_TOKEN=key0987654321
+
+  mongodb:
+    image: mongo
+    volumes:
+      - ./mongodb:/data/db
+    networks:
+      - microservices-net
 
   nginx:
     image: nginx:latest
@@ -34,3 +57,4 @@ services:
     depends_on:
       - web
       - user
+      - auth
